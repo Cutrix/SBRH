@@ -5,8 +5,10 @@ class MyAuth extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->library(array('ion_auth', 'form_validation'));
-		$this->load->helper(array('assets'));
+		$this->load->helper(array('assets', 'form'));
 	}
+
+	//-------------------------------------------------------------------------------------------------------
 
 	public function index() {
 		if (!$this->ion_auth->logged_in()) {
@@ -30,6 +32,8 @@ class MyAuth extends CI_Controller {
 		}
 	}
 
+	//-------------------------------------------------------------------------------------------------------
+
 	public function login() {
 		$this->load->view('templ/header');
 		//$this->load->view('templ/nav');
@@ -40,20 +44,15 @@ class MyAuth extends CI_Controller {
 
 		if ($this->form_validation->run() === TRUE) {
 
-			if ($this->ion_auth->login($this->input->post('
-				login'), $this->input->post('pwd'))) {
-				if ($this->ion_auth->is_admin()) {
-					redirect('MyAuth', 'refresh');
-				}
-			} else {
-				var_dump($this->ion_auth->login($this->input->post('
-				login'), $this->input->post('pwd')));
-				exit('je ne peux pasm me connecter');
+			if ($this->ion_auth->login($this->input->post('login'), $this->input->post('pwd'))) {
+				redirect('MyAuth', 'refresh');
 			}
 		}
 
 		$this->load->view('templ/footer');
 	}
+
+	//-------------------------------------------------------------------------------------------------------
 
 	public function logout() {
 		$this->ion_auth->logout();
@@ -71,10 +70,30 @@ class MyAuth extends CI_Controller {
 		}
 	}
 
-	//-------------------------------------------------------------------------------------
+	//-------------------------------------------------------------------------------------------------------
 
 	public function createUser() {
-		$this->load->view('templ/nav_admin');
-	}
+		//Va te loguer petit
+		if (!$this->ion_auth->logged_in()) {
+			redirect('MyAuth/login', 'refresh');
+		}
+		$this->form_validation->set_rules('identity', '"identity"', 'required');
+		$this->form_validation->set_rules('pwd', '"pwd"', 'required');
+		$this->form_validation->set_rules('email', '"email"', 'required');
+		$this->load->view('templ/header');
 
+		//$this->load->view('templ/nav_admin');
+		$data['users'] = $this->ion_auth->groups()->result();
+
+		if ($this->form_validation->run() === TRUE) {
+			$group_id[] = $this->input->post('groups');
+			$add_data   = [];
+			if ($this->ion_auth->register($this->input->post('identity'), $this->input->post('pwd'), $this->input->post('email'), $add_data, $group_id)) {
+				$data['register_succes'] = true;
+			}
+		}
+
+		$this->load->view('MyAuth/new_user', $data);
+
+	}
 }

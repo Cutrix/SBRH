@@ -1,45 +1,31 @@
-body, html {
-	background: url("../img/city.jpg");
-	background-size: cover;
-	margin: 0;
+@import url('https://fonts.googleapis.com/css?family=Sunflower:300');
+.content {
+	margin: 0 0 0 20%;
+	background-color: #f1f1f1;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	height: 600px;
+	border-radius: 5px;
+}
+
+.header_content {
 	width: 100%;
-	height: 100%;
 }
 
-#form_auth {
-
+.title_content {
+	font-family: 'Sunflower', sans-serif;
+	margin-left: 20px;
 }
 
-.main__block {
-	position: absolute;
-	width: 55%;
-	height: 70%;
-	background: #fff;
-	opacity: .9;
-	top: 30px;
-	right: 15px;
+.body_content {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
 }
 
-.main_block__header {
-	background-color: #000;
-	color: #fff;
-	height: 60px;
-}
-
-.main_block__header_lib {
-	font-weight: bold;
-	font-size: 2.5em;
-	padding-left: 10px;
-	opacity: 1;
-}
-
-.form_block {
-	position: relative;
-	z-index: 1;
-	display: inline-block;
-	margin: 1em;
-	max-width: 500px;
-	width: calc(100% - 2em);
-	vertical-align: top;
-	background: #fff;
+.body_content input {
+	width: 450px;
+	margin: 10px;
+	padding: 10px;
 }

@@ -1,4 +1,8 @@
-<!-- Navbar -->
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+
+  <!-- Navbar -->
   <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -146,35 +150,6 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fa fa-dashboard"></i>
-              <p>
-                Dashboard
-                <i class="right fa fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Dashboard v1</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Dashboard v2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Dashboard v3</p>
-                </a>
-              </li>
-            </ul>
-          </li>
           <li class="nav-item">
             <a href="pages/widgets.html" class="nav-link">
               <i class="nav-icon fa fa-th"></i>
@@ -194,7 +169,11 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <!-- <a href="pages/charts/chartjs.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Nouvel utilisateur</p>
+                </a> -->
+                <a href="<?=site_url('MyAuth/createUser')?>" class="nav-link">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>Nouvel utilisateur</p>
                 </a>
@@ -447,3 +426,40 @@
     </div>
     <!-- /.sidebar -->
   </aside>
+
+  <script src="assets/css/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="../assets/css/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Morris.js charts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="../assets/css/plugins/morris/morris.min.js"></script>
+<!-- Sparkline -->
+<script src="../assets/css/plugins/sparkline/jquery.sparkline.min.js"></script>
+<!-- jvectormap -->
+<script src="../assets/css/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="../assets/css/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="../assets/css/plugins/knob/jquery.knob.js"></script>
+<!-- daterangepicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script src="../assets/css/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- datepicker -->
+<script src="../assets/css/plugins/datepicker/bootstrap-datepicker.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="../assets/css/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<!-- Slimscroll -->
+<script src="../assets/css/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../assets/css/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../assets/css/dist/js/adminlte.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="../assets/css/dist/js/pages/dashboard.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../assets/css/dist/js/demo.js"></script>
