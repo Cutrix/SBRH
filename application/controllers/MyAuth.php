@@ -4,8 +4,8 @@ class MyAuth extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->library(array('ion_auth', 'form_validation'));
-		$this->load->helper(array('assets', 'form'));
+		$this->load->library(array('ion_auth', 'form_validation', 'email'));
+		$this->load->helper(array('assets', 'form', 'odit', 'email'));
 	}
 
 	//-------------------------------------------------------------------------------------------------------
@@ -17,6 +17,7 @@ class MyAuth extends CI_Controller {
 		} else if (!$this->ion_auth->is_admin())// remove this elseif if you want to enable this for non-admins
 		{
 			// redirect them to the home page because they must be an administrator to view this
+			var_dump('olahj');
 			return show_error('You must be an administrator to view this page.');
 		} else {
 			// set the flash data error message if there is one
@@ -28,14 +29,15 @@ class MyAuth extends CI_Controller {
 				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
 			}
 			$this->_render_page('templ/header', $this->data);
-			$this->_render_page('MyAuth/admin', $this->data);
+			$this->load->view('templ/nav_admin', $this->data);
+			$this->load->view('MyAuth/admin');
 		}
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 
 	public function login() {
-		$this->load->view('templ/header');
+		//$this->load->view('templ/header');
 		//$this->load->view('templ/nav');
 		$this->load->view('MyAuth/connexion');
 
@@ -43,7 +45,6 @@ class MyAuth extends CI_Controller {
 		$this->form_validation->set_rules('pwd', '"le mot de passe"', 'required');
 
 		if ($this->form_validation->run() === TRUE) {
-
 			if ($this->ion_auth->login($this->input->post('login'), $this->input->post('pwd'))) {
 				redirect('MyAuth', 'refresh');
 			}
@@ -82,18 +83,40 @@ class MyAuth extends CI_Controller {
 		$this->form_validation->set_rules('email', '"email"', 'required');
 		$this->load->view('templ/header');
 
-		//$this->load->view('templ/nav_admin');
+		$this->load->view('templ/nav_admin');
 		$data['users'] = $this->ion_auth->groups()->result();
 
 		if ($this->form_validation->run() === TRUE) {
 			$group_id[] = $this->input->post('groups');
 			$add_data   = [];
-			if ($this->ion_auth->register($this->input->post('identity'), $this->input->post('pwd'), $this->input->post('email'), $add_data, $group_id)) {
-				$data['register_succes'] = true;
+			if (valid_email($this->input->post('email'))) {
+				if ($this->ion_auth->email_check($this->input->post('email'))) {
+					var_dump('email deja enregistree');
+				}
+
 			}
 		}
 
 		$this->load->view('MyAuth/new_user', $data);
 
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+
+	public function createUserAjax() {
+		if ($this->input->post('email_aj') !== NULL) {
+			if ($this->ion_auth->email_check($this->input->post('email_aj'))) {
+				echo "ok";
+			}
+		}
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+
+	public function listUsers() {
+		$this->load->view('templ/header');
+		$data['users'] = $this->ion_auth->users()->result();
+		$this->load->view('MyAuth/list_user', $data);
+		$this->load->view('templ/nav_admin');
 	}
 }

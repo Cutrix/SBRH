@@ -24,9 +24,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
  */
 //$config['base_url'] = 'http://localhost/miage/sbrh/';
-$config['base_url'] = (isset($_SERVER['HTTTPS'])?"https://":"http://").$_SERVER['HTTP_HOST'].'/';
+$config['base_url'] = (isset($_SERVER['HTTTPS'])?"https://":"http://").$_SERVER['HTTP_HOST'].'/sbrh/';
+//echo (isset($_SERVER['HTTTPS'])?"https://":"http://").$_SERVER['HTTP_HOST'].'/miage/sbrh/';
 
-/*
+/*e
 |--------------------------------------------------------------------------
 | Index File
 |--------------------------------------------------------------------------
