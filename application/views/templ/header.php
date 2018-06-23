@@ -8,9 +8,8 @@
 	<link rel="stylesheet" href="<?=css_url('normalize')?>">
 	<link rel="stylesheet" href="<?=css_url('bootstrap.min')?>">
 	<link rel="stylesheet" href="<?=css_url('full-slide')?>">
-	<link rel="stylesheet" href="<?=css_url('pwd')?>">
-	<link rel="stylesheet" href="<?=css_url('nao')?>">
 	<link rel="stylesheet" href="<?=css_url('app')?>">
+	<link rel="stylesheet" href="<?=css_url('nao')?>">
 	<link rel="stylesheet" href="<?=css_url('plugins/font-awesome/css/font-awesome.min')?>">
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	<link rel="stylesheet" href="<?=css_url('dist/css/adminlte.min')?>">

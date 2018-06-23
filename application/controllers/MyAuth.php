@@ -17,7 +17,6 @@ class MyAuth extends CI_Controller {
 		} else if (!$this->ion_auth->is_admin())// remove this elseif if you want to enable this for non-admins
 		{
 			// redirect them to the home page because they must be an administrator to view this
-			var_dump('olahj');
 			return show_error('You must be an administrator to view this page.');
 		} else {
 			// set the flash data error message if there is one
@@ -37,9 +36,8 @@ class MyAuth extends CI_Controller {
 	//-------------------------------------------------------------------------------------------------------
 
 	public function login() {
-		//$this->load->view('templ/header');
-		//$this->load->view('templ/nav');
-		$this->load->view('MyAuth/connexion');
+		$this->load->view('templ/header');
+		$this->load->view('templ/nav');
 
 		$this->form_validation->set_rules('login', '"Le login"', 'required');
 		$this->form_validation->set_rules('pwd', '"le mot de passe"', 'required');
@@ -47,7 +45,15 @@ class MyAuth extends CI_Controller {
 		if ($this->form_validation->run() === TRUE) {
 			if ($this->ion_auth->login($this->input->post('login'), $this->input->post('pwd'))) {
 				redirect('MyAuth', 'refresh');
+			} else {
+				$data['error_login'] = true;
 			}
+		}
+
+		if (isset($data)) {
+			$this->load->view('MyAuth/connexion', $data);
+		} else {
+			$this->load->view('MyAuth/connexion');
 		}
 
 		$this->load->view('templ/footer');
@@ -81,20 +87,34 @@ class MyAuth extends CI_Controller {
 		$this->form_validation->set_rules('identity', '"identity"', 'required');
 		$this->form_validation->set_rules('pwd', '"pwd"', 'required');
 		$this->form_validation->set_rules('email', '"email"', 'required');
+		$this->form_validation->set_rules('nom', '"nom"', 'required');
+		$this->form_validation->set_rules('prenom', '"prenom"', 'required');
 		$this->load->view('templ/header');
 
-		$this->load->view('templ/nav_admin');
+		//$this->load->view('templ/nav_admin');
 		$data['users'] = $this->ion_auth->groups()->result();
 
 		if ($this->form_validation->run() === TRUE) {
 			$group_id[] = $this->input->post('groups');
-			$add_data   = [];
-			if (valid_email($this->input->post('email'))) {
-				if ($this->ion_auth->email_check($this->input->post('email'))) {
-					var_dump('email deja enregistree');
-				}
 
+			$add_data = ['first_name' => $this->input->post('nom', true), 'last_name' => strtoupper($this->input->post('prenom', true))];
+
+			if ($this->ion_auth->register($this->input->post('identity', true), $this->input->post('pwd', true), $this->input->post('email', true), $add_data, $group_id)) {
+				$this->config->load('ion_auth');
+				$this->email->set_mailtype('html');
+				$this->email->from($this->config->item('admin_email'), 'admin');
+				$this->email->to($this->input->post('email'));
+				$data = ['login' => $this->input->post('identity'), 'pwd' => $this->input->post('pwd'), 'email' => $this->input->post('email')];
+				$this->email->subject('Vos identifiants');
+				$this->email->message($this->load->view('auth/email/new_user.tpl.php', $data, true));
+
+				if ($this->email->send()) {
+					var_dump('ok');
+				}
+				echo "<script>alert('utilisateur bien enregistree')</script>";
+				echo $this->email->print_debugger();
 			}
+
 		}
 
 		$this->load->view('MyAuth/new_user', $data);

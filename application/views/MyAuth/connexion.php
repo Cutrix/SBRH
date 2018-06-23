@@ -5,14 +5,18 @@
 
 		</div>
 
-		<div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 auth_zone">
+		<div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
 			<h1 class="py-3 px-3 jumbotron" style="font-weight: bold;">Connexion</h1>
-			<form action="" method="post" style="font-size: 25px; border: 1px solid white;">
+			<div id="error">
+
+			</div>
+
+		<form action="" method="post" style="font-size: 25px; border: 1px solid white;">
 				<span class="input input--nao">
 
 				<input type="text" name="login" id="login" class="input__field input__field--nao">
 				<label for="" class="input__label input__label--nao">
-					<span class="input__label-content">Username</span>
+					<span class="input__label-content">login</span>
 				</label>
 				<svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
 					<path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
@@ -32,7 +36,7 @@
 
 				<span class="input input--nao">
 					<p class="form__password-strength" id="strength-output"></p>
-					<input type="submit" value="Connexion" class="btn btn-primary text-center">
+					<input type="submit" value="Connexion" class="btn btn-primary text-right">
 				</span>
 
 			</form>
@@ -80,7 +84,14 @@ supportsCssVars()||alert("Please view this demo in a modern browser that support
 		}
 	})();
 </script>
+<?php if (isset($error_login) && $error_login === true):?>
+<script>
+	var error_msg = "<div style='border-radius: 5px; padding: 5px 5px' class='col-md-12 text-center bg-danger'>"+
+					"<small class='' style='font-weight: bold'><i class='fa fa-warning'></i>   Email ou mot de passe invalide !"+ "</small>"+
+				"</div>"
+	$('#error').html(error_msg).stop().fadeOut(8000)
+</script>
+<?php endif?>
 <script src="<?=js_url('imagesloaded.pkgd.min')?>"></script>
 <script src="<?=js_url('zxcvbn')?>"></script>
 <script src="<?=js_url('strenghtly')?>"></script>
-</body>
